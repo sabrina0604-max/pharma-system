@@ -1,0 +1,25 @@
+button{
+    border: 1px solid rgb(65, 28, 233);
+    border-radius: 1rem;
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.4s;
+    padding: 0.5rem 2rem;
+
+}
+
+button:hover{
+    transform: translateY(-2px);
+    opacity: 1;
+}
+
+.azul{
+    background-color: #1760c0;
+}
+
+.vermelho{
+    background-color: rgb(255, 0, 0);
+}
