@@ -8,6 +8,13 @@ import './Produtos.css'
 const Produtos = () => {
 
   const [produtos, setProdutos] = useState([]);
+  const [busca, setBusca] = useState("");
+
+  function buscaValue(evento){
+    setBusca(evento.target.value)
+  }
+
+  const produtoBusca = produtos.filter(item => item.nome.toLowerCase().includes(busca.toLowerCase()))
 
   useEffect(() => {
     const produtosSalvos = localStorage.getItem("produtos");
@@ -37,6 +44,10 @@ const Produtos = () => {
     produtosExibidos = produtosEstoqueBaixo;
   }
 
+  if(busca !== ""){
+    produtosExibidos = produtoBusca;
+  }
+
   function editarProduto(id){
     navigate(`/cadastro/${id}`);
   }
@@ -44,6 +55,7 @@ const Produtos = () => {
   return(
     <div className='container-produtos'>
       <h1>Produtos</h1>
+      <input className='input-busca' type='text' name='text' value={busca} onChange={buscaValue} placeholder='Buscar produto...'/>
       <div className='tabela-container'>
         <table className='tabela-produtos'>
           <thead>
@@ -54,6 +66,7 @@ const Produtos = () => {
               <th>Fabricante</th>
               <th>Estoque</th>
               <th>Descrição</th>
+              <th>Ações</th>
             </tr>
           </thead>
 
@@ -66,8 +79,12 @@ const Produtos = () => {
                 <td>{produto.fabricante}</td>
                 <td>{produto.estoque}</td>
                 <td>{produto.descricao}</td>
-                <td><Button texto="Editar" onClick={()=> editarProduto(produto.id)}></Button></td>
-                <td><Button texto="Excluir" onClick={() => excluirProduto(produto.id)}></Button></td>
+                <td>
+                  <div className='acoes'>
+                  <Button texto="Editar" onClick={()=> editarProduto(produto.id)}></Button>
+                <Button texto="Excluir" onClick={() => excluirProduto(produto.id)}></Button>
+                </div>
+                </td>
             </tr>
             ))}
           </tbody>
