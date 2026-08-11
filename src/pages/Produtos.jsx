@@ -9,12 +9,18 @@ const Produtos = () => {
 
   const [produtos, setProdutos] = useState([]);
   const [busca, setBusca] = useState("");
+  
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const estoqueBaixo = searchParams.get("estoqueBaixo");
+
+  const produtosEstoqueBaixo = produtos.filter(item => item.estoque < 5);
+  let produtoParaBuscar = produtos;
 
   function buscaValue(evento){
     setBusca(evento.target.value)
   }
-
-  const produtoBusca = produtos.filter(item => item.nome.toLowerCase().includes(busca.toLowerCase()))
 
   useEffect(() => {
     const produtosSalvos = localStorage.getItem("produtos");
@@ -32,17 +38,17 @@ const Produtos = () => {
     localStorage.setItem("produtos", JSON.stringify(produtosAtualizados));
   }
 
-  const navigate = useNavigate();
-
-  const [searchParams] = useSearchParams();
-  const estoqueBaixo = searchParams.get("estoqueBaixo");
-
-  const produtosEstoqueBaixo = produtos.filter(item => item.estoque < 5);
-  let produtosExibidos = produtos;
-
   if (estoqueBaixo === "true"){
-    produtosExibidos = produtosEstoqueBaixo;
+    produtoParaBuscar = produtosEstoqueBaixo;
   }
+
+  const produtoBusca = produtoParaBuscar.filter(item => 
+    item.nome.toLowerCase().includes(busca.toLowerCase())||
+    item.categoria.toLowerCase().includes(busca.toLowerCase())||
+    item.fabricante.toLowerCase().includes(busca.toLowerCase())
+  )
+
+  let produtosExibidos = produtoParaBuscar;
 
   if(busca !== ""){
     produtosExibidos = produtoBusca;
@@ -71,7 +77,11 @@ const Produtos = () => {
           </thead>
 
           <tbody>
-            {produtosExibidos.map((produto) =>(
+            {produtosExibidos.length === 0 ? 
+            <tr>
+              <td colSpan="7">Nenhum produto encontrado</td>
+            </tr> :
+            produtosExibidos.map((produto) =>(
               <tr key={produto.id}>
                 <td>{produto.nome}</td>
                 <td>R$ {produto.preco}</td>
@@ -81,8 +91,8 @@ const Produtos = () => {
                 <td>{produto.descricao}</td>
                 <td>
                   <div className='acoes'>
-                  <Button texto="Editar" onClick={()=> editarProduto(produto.id)}></Button>
-                <Button texto="Excluir" onClick={() => excluirProduto(produto.id)}></Button>
+                    <Button texto="Editar" onClick={()=> editarProduto(produto.id)}></Button>
+                    <Button texto="Excluir" onClick={() => excluirProduto(produto.id)}></Button>
                 </div>
                 </td>
             </tr>
