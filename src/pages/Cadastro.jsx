@@ -27,36 +27,36 @@ const Cadastro = () => {
     const [idEditando, setIdEditando] = useState(null);
 
     function atualizarNome(evento){
-        setNome(evento.target.value);
+        setNome(evento.target.value.toUpperCase());
     }
 
     function atualizarPreco(evento){
-        const precoValue = evento.target.value;
+        const precoValue = evento.target.value.toUpperCase();
         if(/^\d*(\.\d{0,2})?$/.test(precoValue)){
             setPreco(precoValue)
             }
     }
 
     function atualizarEstoque(evento){
-        const estoqueValue = evento.target.value;
+        const estoqueValue = evento.target.value.toUpperCase();
         if(/^\d*$/.test(estoqueValue)){
             setEstoque(estoqueValue);
         }
     }
 
     function atualizarCategoria(evento){
-        const categoriaValue = evento.target.value
+        const categoriaValue = evento.target.value.toUpperCase()
         if(/^[\p{L} ]*$/u.test(categoriaValue)){
             setCategoria(categoriaValue);
         }
     }
 
     function atualizarDescricao(evento){
-        setDescricao(evento.target.value);
+        setDescricao(evento.target.value.toUpperCase());
     }
 
     function atualizarFabricante(evento){
-        const fabricanteValue = evento.target.value;
+        const fabricanteValue = evento.target.value.toUpperCase();
         if(/^[\p{L} ]*$/u.test(fabricanteValue)){
             setFabricante(fabricanteValue);
         }

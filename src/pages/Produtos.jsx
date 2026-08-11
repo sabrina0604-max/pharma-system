@@ -43,9 +43,9 @@ const Produtos = () => {
   }
 
   const produtoBusca = produtoParaBuscar.filter(item => 
-    item.nome.toLowerCase().includes(busca.toLowerCase())||
-    item.categoria.toLowerCase().includes(busca.toLowerCase())||
-    item.fabricante.toLowerCase().includes(busca.toLowerCase())
+    item.nome.toUpperCase().includes(busca.toUpperCase())||
+    item.categoria.toUpperCase().includes(busca.toUpperCase())||
+    item.fabricante.toUpperCase().includes(busca.toUpperCase())
   )
 
   let produtosExibidos = produtoParaBuscar;
