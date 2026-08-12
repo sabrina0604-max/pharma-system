@@ -9,6 +9,7 @@ const Produtos = () => {
 
   const [produtos, setProdutos] = useState([]);
   const [busca, setBusca] = useState("");
+  const [ordenacao, setOrdenacao] = useState("");
   
   const navigate = useNavigate();
 
@@ -49,19 +50,62 @@ const Produtos = () => {
   )
 
   let produtosExibidos = produtoParaBuscar;
+  
 
   if(busca !== ""){
     produtosExibidos = produtoBusca;
   }
 
+  
+  if (ordenacao === "nome-AZ"){
+    const copiaProdutos =[...produtosExibidos]
+    copiaProdutos.sort((a,b) => a.nome.localeCompare(b.nome))
+    produtosExibidos = copiaProdutos
+  }else if(ordenacao === "nome-ZA"){
+    const copiaProdutos = [...produtosExibidos]
+    copiaProdutos.sort((a,b) => b.nome.localeCompare(a.nome))
+    produtosExibidos = copiaProdutos
+  }else if(ordenacao === "preco-+"){
+    const copiaProdutos =[...produtosExibidos]
+    copiaProdutos.sort((a,b) => a.preco - b.preco)
+    produtosExibidos = copiaProdutos
+  }else if(ordenacao === "preco+-"){
+    const copiaProdutos =[...produtosExibidos]
+    copiaProdutos.sort((a,b) => b.preco - a.preco)
+    produtosExibidos = copiaProdutos
+  }else if(ordenacao === "estoque-+"){
+    const copiaProdutos =[...produtosExibidos]
+    copiaProdutos.sort((a,b) => a.estoque - b.estoque)
+    produtosExibidos = copiaProdutos
+  }else if(ordenacao === "estoque+-"){
+    const copiaProdutos =[...produtosExibidos]
+    copiaProdutos.sort((a,b) => b.estoque - a.estoque)
+    produtosExibidos = copiaProdutos
+  }
+
   function editarProduto(id){
     navigate(`/cadastro/${id}`);
+  }
+ 
+
+  function escolherOrdem(evento){
+    setOrdenacao(evento.target.value)
   }
 
   return(
     <div className='container-produtos'>
       <h1>Produtos</h1>
-      <input className='input-busca' type='text' name='text' value={busca} onChange={buscaValue} placeholder='Buscar produto...'/>
+      <div className='filtros'>
+        <input className='input-busca' type='text' name='text' value={busca} onChange={buscaValue} placeholder='Buscar produto...'/>
+        <select className="ordenacao" name="ordenacao" id="ordenacao" onChange={escolherOrdem}>
+          <option value="nome-AZ">Nome A - Z</option>
+          <option value="nome-ZA">Nome Z - A</option>
+          <option value="preco+-">Preço Maior - Menor</option>
+          <option value="preco-+">Preço Menor - Maior</option>
+          <option value="estoque+-">Estoque Maior - Menor</option>
+          <option value="estoque-+">Estoque Menor - Maior</option>
+        </select>
+      </div>
       <div className='tabela-container'>
         <table className='tabela-produtos'>
           <thead>
