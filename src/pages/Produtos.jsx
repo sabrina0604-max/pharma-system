@@ -56,30 +56,22 @@ const Produtos = () => {
     produtosExibidos = produtoBusca;
   }
 
+  const copiaProdutos =[...produtosExibidos]
+  const regraOrdenacao = {
+    "nome-AZ": (a,b) => a.nome.localeCompare(b.nome),
+    "nome-ZA": (a,b) => b.nome.localeCompare(a.nome),
+    "preco-+": (a,b) => a.preco - b.preco,
+    "preco+-": (a,b) => b.preco - a.preco,
+    "estoque-+": (a,b) => a.estoque - b.estoque,
+    "estoque+-": (a,b) => b.estoque - a.estoque
+  }
+
+  let regraEscolhida
   
-  if (ordenacao === "nome-AZ"){
-    const copiaProdutos =[...produtosExibidos]
-    copiaProdutos.sort((a,b) => a.nome.localeCompare(b.nome))
-    produtosExibidos = copiaProdutos
-  }else if(ordenacao === "nome-ZA"){
-    const copiaProdutos = [...produtosExibidos]
-    copiaProdutos.sort((a,b) => b.nome.localeCompare(a.nome))
-    produtosExibidos = copiaProdutos
-  }else if(ordenacao === "preco-+"){
-    const copiaProdutos =[...produtosExibidos]
-    copiaProdutos.sort((a,b) => a.preco - b.preco)
-    produtosExibidos = copiaProdutos
-  }else if(ordenacao === "preco+-"){
-    const copiaProdutos =[...produtosExibidos]
-    copiaProdutos.sort((a,b) => b.preco - a.preco)
-    produtosExibidos = copiaProdutos
-  }else if(ordenacao === "estoque-+"){
-    const copiaProdutos =[...produtosExibidos]
-    copiaProdutos.sort((a,b) => a.estoque - b.estoque)
-    produtosExibidos = copiaProdutos
-  }else if(ordenacao === "estoque+-"){
-    const copiaProdutos =[...produtosExibidos]
-    copiaProdutos.sort((a,b) => b.estoque - a.estoque)
+  const regraEscolhida = regraOrdenacao[ordenacao]
+
+  if (regraEscolhida){
+    copiaProdutos.sort(regraEscolhida)
     produtosExibidos = copiaProdutos
   }
 
