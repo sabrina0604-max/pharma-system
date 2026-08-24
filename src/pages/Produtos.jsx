@@ -66,8 +66,6 @@ const Produtos = () => {
     "estoque+-": (a,b) => b.estoque - a.estoque
   }
 
-  let regraEscolhida
-  
   const regraEscolhida = regraOrdenacao[ordenacao]
 
   if (regraEscolhida){
@@ -89,7 +87,7 @@ const Produtos = () => {
       <h1>Produtos</h1>
       <div className='filtros'>
         <input className='input-busca' type='text' name='text' value={busca} onChange={buscaValue} placeholder='Buscar produto...'/>
-        <select className="ordenacao" name="ordenacao" id="ordenacao" onChange={escolherOrdem}>
+        <select className="ordenacao" name="ordenacao" onChange={escolherOrdem}>
           <option value="nome-AZ">Nome A - Z</option>
           <option value="nome-ZA">Nome Z - A</option>
           <option value="preco+-">Preço Maior - Menor</option>
