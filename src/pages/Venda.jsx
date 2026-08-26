@@ -40,14 +40,57 @@ const Venda = () => {
   if(produtoSelecionado){
     if(quantidade <= produtoSelecionado.estoque){
       precoTotal = Number(produtoSelecionado.preco) * quantidade
+    }
   }
+
+  function validações(){
+    if(produto === ""){
+      alert("Selecione um produto")
+      return false
+    }
+    if(quantidade === ""){
+      alert("Selecione a quantidade vendida")
+      return false
+    }
+    if(quantidade > produtoSelecionado.estoque){
+      alert("Quantidade de venda maior que o estoque")
+      return false
+    }
+    if(quantidade <= 0 ){
+      alert("A quantidade deve ser maior que zero")
+      return false
+    }
+    return true
+  }
+
+
+  function finalizarVenda(){
+    if(!validações()){
+      return
+    }
+
+    const produtosAtualizados = produtos.map((item) =>{
+      if(item.id === produto){
+        return{
+          ...item,
+          estoque: item.estoque - quantidade
+        }
+      }
+      return item
+    })
+
+    setProdutos(produtosAtualizados)
+    localStorage.setItem('produtos', JSON.stringify(produtosAtualizados))
+    setProduto("")
+    setQuantidade("")
+    alert("Venda realizada com sucesso!")
   }
 
   return (
     <div className='container-venda'>
       <h1>Realizar Venda</h1>
 
-      <select className='produtoEscolhido' name='produtoEscolhido' onChange={escolherProduto} >
+      <select className='produtoEscolhido' name='produtoEscolhido' value={produto} onChange={escolherProduto} >
         <option value="">Selecione um produto</option>
         {produtos.map((item)=>(
           <option key={item.id} value={item.id}>{item.nome}</option>
@@ -59,7 +102,7 @@ const Venda = () => {
       <input className='quantidade' type="number" name='quantidade' value={quantidade} onChange={atualizarQuantidade} placeholder='Digite a quantidade que deseja vender'/>
       <p className='preco'>Preço unitário: {produtoSelecionado? produtoSelecionado.preco : "0"}</p>
       <p className='total'>Total: {precoTotal}</p>
-      <Button texto="Finalizar Venda" variante={"azul"}/>
+      <Button texto="Finalizar Venda" variante={"azul"} onClick={finalizarVenda}/>
     </div>
   )
 }
