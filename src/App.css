@@ -3,11 +3,6 @@
   --primary-dark: #10468d;
   --background: #f5f7fa;
   --text: #111;
+  --text-secondary: #666
   --border: #ccc;
-}
-
-body{
-  margin: 0;
-  background-color: var(--background);
-  color: var(--text);
 }

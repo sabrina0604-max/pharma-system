@@ -1,5 +1,6 @@
 
 .card-resumo{
+    box-sizing: border-box;
     background-color: white;
     width: 220px;
     padding: 25px;
@@ -21,14 +22,21 @@
 
 .card-resumo h3{
     margin-bottom: 10px;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .card-resumo h2{
-    color: #1760c0;
+    color: var(--primary);
 }
 
 .card-link{
     text-decoration: none;
     color: inherit;
+}
+
+@media(max-width: 600px){
+    .card-resumo{
+        width: 100%;
+        max-width: 300px;
+    }
 }
