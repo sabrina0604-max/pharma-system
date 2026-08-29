@@ -20,8 +20,7 @@ function Home(){
 
   const totalProdutos = produtos.length;
 
-  const estoqueBaixo = produtos.filter(item => item.estoque < 5)
-  const totalEstoqueBaixo = estoqueBaixo.length
+  const totalEstoqueBaixo = produtos.filter(item => item.estoque < 5).length
 
   const categorias = produtos.map(item => item.categoria)
   const categoriasUnicas = [...new Set(categorias)];
@@ -34,7 +33,7 @@ function Home(){
     <h1>Farmácia</h1>
     <div className='cards'>
       <CardResumo icone="📦" titulo="Produtos" valor={totalProdutos} caminho="/produtos"/>
-      <CardResumo icone="📂" titulo="Categorias" valor={totalCategorias}/>
+      <CardResumo icone="📂" titulo="Categorias" valor={totalCategorias} caminho="/produtos"/>
       <CardResumo icone="⚠️" titulo="Estoque Baixo" valor={totalEstoqueBaixo} caminho="/produtos?estoqueBaixo=true"/>
     </div>
     <Button caminho="/cadastro" texto="Cadastro"></Button>
