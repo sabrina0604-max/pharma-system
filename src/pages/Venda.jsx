@@ -7,6 +7,7 @@ const Venda = () => {
   const [produto, setProduto] = useState("")
   const [produtos, setProdutos] = useState([])
   const [quantidade, setQuantidade] = useState("")
+  const [vendas, setVendas] = useState([])
 
   useEffect(()=>{
     const produtosSalvos = localStorage.getItem("produtos")
@@ -16,6 +17,15 @@ const Venda = () => {
       setProdutos(listaProdutos)
     }
   }, [])
+
+  useEffect(()=>{
+    const vendasSalvas = localStorage.getItem("vendas")
+
+    if(vendasSalvas){
+      const listaVendas = JSON.parse(vendasSalvas)
+      setVendas(listaVendas)
+    }
+  },[])
   
   function escolherProduto(evento){
     setProduto(Number(evento.target.value))
@@ -69,6 +79,21 @@ const Venda = () => {
       return
     }
 
+    const venda = {
+      produto: produtoSelecionado.nome,
+      quantidade: quantidade,
+      precoUnitario: Number(produtoSelecionado.preco),
+      precoTotal: Number(produtoSelecionado.preco)* quantidade,
+      data: new Date()
+    }
+
+    const vendasSalvas = localStorage.getItem("vendas")
+    
+    const vendas = vendasSalvas ? JSON.parse(vendasSalvas) : []
+    vendas.push(venda)
+
+    localStorage.setItem("vendas", JSON.stringify(vendas))
+
     const produtosAtualizados = produtos.map((item) =>{
       if(item.id === produto){
         return{
@@ -87,6 +112,7 @@ const Venda = () => {
   }
 
   return (
+    <>
     <div className='container-venda'>
       <h1>Realizar Venda</h1>
 
@@ -104,6 +130,25 @@ const Venda = () => {
       <p className='total'>Total: {precoTotal}</p>
       <Button texto="Finalizar Venda" variante={"azul"} onClick={finalizarVenda}/>
     </div>
+    <div className='tabela-vendas'>
+      <div className='cabecalho-vendas'>
+          <span>Produto: </span>
+          <span>Quantidade: </span>
+          <span>Preço unitário: </span>
+          <span>Preço Total: </span>
+          <span>Data: </span>
+      </div>
+      {vendas.map((item, index) =>(
+        <div className='linha-venda' key={index}>
+          <span>{item.produto}</span>
+          <span>{item.quantidade}</span>
+          <span>R$ {item.precoUnitario.toFixed(2)}</span>
+          <span>R$ {item.precoTotal.toFixed(2)}</span>
+          <span>{new Date(item.data).toLocaleString("pt-BR")}</span>
+        </div>
+      ))}
+    </div>
+    </>
   )
 }
 

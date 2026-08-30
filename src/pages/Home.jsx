@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Button from '../componentes/Button'
 import './Home.css'
 import Navbar from '../componentes/Navbar'
 import CardResumo from '../componentes/CardResumo'
@@ -29,16 +28,14 @@ function Home(){
 
 
   return (
-    <>
-    <h1>Farmácia</h1>
-    <div className='cards'>
-      <CardResumo icone="📦" titulo="Produtos" valor={totalProdutos} caminho="/produtos"/>
-      <CardResumo icone="📂" titulo="Categorias" valor={totalCategorias} caminho="/produtos"/>
-      <CardResumo icone="⚠️" titulo="Estoque Baixo" valor={totalEstoqueBaixo} caminho="/produtos?estoqueBaixo=true"/>
+    <div className='home'>
+      <h1>Dashboard</h1>
+      <div className='cards'>
+        <CardResumo icone="📦" titulo="Produtos" valor={totalProdutos} caminho="/produtos"/>
+        <CardResumo icone="📂" titulo="Categorias" valor={totalCategorias} caminho="/produtos"/>
+        <CardResumo icone="⚠️" titulo="Estoque Baixo" valor={totalEstoqueBaixo} caminho="/produtos?estoqueBaixo=true"/>
+      </div>
     </div>
-    <Button caminho="/cadastro" texto="Cadastro"></Button>
-    <Button caminho="/produtos" texto="Produtos"></Button>
-    </>
   )
 }
 

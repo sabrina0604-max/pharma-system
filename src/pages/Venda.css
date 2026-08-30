@@ -45,3 +45,27 @@
     margin: 50px 0;
     color:var(--primary-dark)
 }
+
+.tabela-vendas{
+    width: 100%;
+    margin-top: 30px;
+    overflow-x: auto;
+}
+
+.cabecalho-vendas,
+.linha-venda{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr 2fr;
+    align-items: center;
+}
+
+.cabecalho-vendas{
+    padding: 12px 16px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--border);
+}
+
+.linha-venda{
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+}
