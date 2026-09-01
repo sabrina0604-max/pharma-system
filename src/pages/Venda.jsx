@@ -80,6 +80,8 @@ const Venda = () => {
     }
 
     const venda = {
+      id: Date.now(),
+      produtoId: produtoSelecionado.id,
       produto: produtoSelecionado.nome,
       quantidade: quantidade,
       precoUnitario: Number(produtoSelecionado.preco),
@@ -88,11 +90,10 @@ const Venda = () => {
     }
 
     const vendasSalvas = localStorage.getItem("vendas")
-    
     const vendas = vendasSalvas ? JSON.parse(vendasSalvas) : []
-    vendas.push(venda)
-
-    localStorage.setItem("vendas", JSON.stringify(vendas))
+    const vendasAtualizadas = [...vendas, venda]
+    setVendas(vendasAtualizadas)
+    localStorage.setItem("vendas", JSON.stringify(vendasAtualizadas))
 
     const produtosAtualizados = produtos.map((item) =>{
       if(item.id === produto){
@@ -109,6 +110,38 @@ const Venda = () => {
     setProduto("")
     setQuantidade("")
     alert("Venda realizada com sucesso!")
+  }
+
+  const vendasOrdenadas = [...vendas].sort((a,b) =>{
+    return new Date(b.data) - new Date(a.data)
+  })
+
+  function excluirVenda(id){
+
+    const confirmar= window.confirm("Deseja realmente excluir esta venda?")
+    if(!confirmar){
+      return
+    }
+
+    const venda = vendas.find(item => item.id === id)
+
+    const produto = produtos.find(item => item.id === vendas.produtoId)
+
+    const vendasAtualizada = vendas.filter(item => item.id !== id);
+    setVendas(vendasAtualizada)
+    localStorage.setItem("vendas", JSON.stringify(vendasAtualizada))
+
+    const produtosAtualizados = produtos.map((item)=>{
+      if(item.id === venda.produtoId){
+        return{
+          ...item,
+          estoque: item.estoque + venda.quantidade
+        }
+      }
+      return item
+    })
+
+    localStorage.setItem("produtos", JSON.stringify(produtosAtualizados))
   }
 
   return (
@@ -138,13 +171,16 @@ const Venda = () => {
           <span>Preço Total: </span>
           <span>Data: </span>
       </div>
-      {vendas.map((item, index) =>(
-        <div className='linha-venda' key={index}>
+      {vendasOrdenadas.map((item) =>(
+        <div className='linha-venda' key={item.id}>
           <span>{item.produto}</span>
           <span>{item.quantidade}</span>
           <span>R$ {item.precoUnitario.toFixed(2)}</span>
           <span>R$ {item.precoTotal.toFixed(2)}</span>
           <span>{new Date(item.data).toLocaleString("pt-BR")}</span>
+          <div className='botoes'>
+            <Button texto="Excluir venda" onClick={()=> excluirVenda(item.id)}/>
+          </div>
         </div>
       ))}
     </div>
