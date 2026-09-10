@@ -16,3 +16,35 @@ h1{
     text-align: center;
 }
 
+.ultimas-vendas{
+    background-color: white;
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.linha-ultima-venda,
+.cabecalho-ultima-venda{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.linha-ultima-venda span:nth-child(2),
+.cabecalho-ultima-venda span:nth-child(2){
+    text-align: center;
+}
+
+.linha-ultima-venda span:nth-child(3),
+.cabecalho-ultima-venda span:nth-child(3){
+    text-align: center;
+}
+
+.linha-ultima-venda span:nth-child(4),
+.cabecalho-ultima-venda span:nth-child(4){
+    text-align: center;
+}
+
