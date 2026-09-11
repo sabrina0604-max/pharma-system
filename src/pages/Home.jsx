@@ -39,6 +39,7 @@ function Home(){
   }, 0)
 
   const totalEstoqueBaixo = produtos.filter(item => item.estoque < 5).length
+  const produtosEstoqueBaixo = produtos.filter(item => item.estoque < 5)
 
   const categorias = produtos.map(item => item.categoria)
   const categoriasUnicas = [...new Set(categorias)];
@@ -55,9 +56,14 @@ function Home(){
     return new Date(b.data) - new Date(a.data)
   })
 
+  const ordemEstoqueBaixo = [...produtosEstoqueBaixo].sort((a,b) =>{
+    return b.estoque - a.estoque
+  })
+
   return (
     <div className='home'>
       <h1>Dashboard</h1>
+
       <div className='cards'>
         <CardResumo icone="📦" titulo="Produtos" valor={totalProdutos} caminho="/produtos"/>
         <CardResumo icone="📂" titulo="Categorias" valor={totalCategorias} caminho="/produtos"/>
@@ -66,23 +72,53 @@ function Home(){
         <CardResumo icone="💰" titulo="Total vendido" valor={formatarMoeda(totalVendido)} caminho="/venda"/>
         <CardResumo icone="💵" titulo="Valor em estoque" valor={formatarMoeda(valorEstoque)} caminho="/produtos"/>
       </div>
+
       <div className='ultimas-vendas'>
         <h2>Últimas Vendas</h2>
-        <div className='cabecalho-ultima-venda'>
-          <span>Produto</span>
-          <span>Quantidade</span>
-          <span>Total</span>
-          <span>Data</span>
-        </div>
-        {ultimasVendas.slice(0, 5).map((venda) =>(
-          <div className="linha-ultima-venda" key={venda.id}>
-            <span>{venda.produto}</span>
-            <span>{venda.quantidade} un.</span>
-            <span>{formatarMoeda(venda.precoTotal)}</span>
-            <span>{new Date(venda.data).toLocaleString("pt-BR")}</span>
-          </div>
-        ))}
+
+        {ultimasVendas.length === 0 ? (
+          <h3>Não há vendas</h3>
+        ) : (
+          <>
+            <div className='cabecalho-ultima-venda'>
+              <span>Produto</span>
+              <span>Quantidade</span>
+              <span>Total</span>
+              <span>Data</span>
+            </div>
+            {ultimasVendas.slice(0, 5).map((venda) =>(
+              <div className="linha-ultima-venda" key={venda.id}>
+                <span>{venda.produto}</span>
+                <span>{venda.quantidade} un.</span>
+                <span>{formatarMoeda(venda.precoTotal)}</span>
+                <span>{new Date(venda.data).toLocaleString("pt-BR")}</span>
+              </div>
+            ))}
+          </>
+        )}
       </div>
+
+        <div className='estoques-baixos'>
+          <h2>Produtos com estoque baixo</h2>
+
+          {totalEstoqueBaixo === 0 ? (
+            <h3>Não há produtos com estoque baixo</h3>
+          ) : (
+            <>
+              <div className='cabecalho-produtos-estoque-baixo'>
+                <span>Produto</span>
+                <span>Quantidade</span>
+              </div>
+
+              {ordemEstoqueBaixo.slice(0, 5).map((item) =>(
+                <div className='linha-produtos-estoque-baixo' key={item.id}>
+                  <span>{item.nome}</span>
+                  <span>{item.estoque}</span>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
     </div>
   )
 }
