@@ -1,16 +1,93 @@
-# React + Vite
+# Pharma System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de gerenciamento de produtos e vendas para uma farmácia, desenvolvido para praticar e aplicar conceitos de desenvolvimento Front-End com React
 
-Currently, two official plugins are available:
+## Sobre o projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+o Pharma System é um sistema desenvolvido para simular o gerenciamento de produtos e vendas de uma farmácia.
 
-## React Compiler
+O projeto foi desenvolvido com foco no aprendizado de React e na aplicação prática de conceitos como componentes, estados, rotas, armazenamento de dados manipulação de listas.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Funcionalidades
 
-## Expanding the ESLint configuration
+### Produtos
+- Cadastro de produtos
+- Edição de produtos
+- Exclusão de produtos
+- Consulta dos produtos cadastrados
+- Busca por nome, categoria e fabricante
+- Filtro de produtos com estoque baixo
+- Ordenação por nome, preço e estoque
+- Persistência dos produtos utilizando localStorage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Vendas
+- Seleção de produtos para venda
+- Controle de quantidade disponível em estoque
+- Validação da quantidade vendida
+- Cálculo automático do valor total da venda
+- Registro das vendas
+- Listagem das vendas realizadas
+- Ordenação das vendas por data
+- Exclusão de vendas com reposição automática do estoque
+
+### Dashboard
+- Total de produtos cadastrados
+- Total de categorias
+- Quantidade de produtos com estoque baixo
+- Total de vendas realizadas
+- Valor total vendido
+- Valor total dos produtos em estoque
+- Exibição das últimas vendas
+- Exibição dos produtos com baixo estoque
+
+## Tecnologias utilizadas
+
+- React
+- JavaScript
+- HTML
+- CSS
+- Vite
+- React Router
+- localStorage
+- Git e GitHub
+- GitHub Pages
+
+## Projeto online
+
+O projeto está disponível no GitHub Pages:
+
+[Pharma System](https://sabrina0604-max.github.io/pharma-system/)
+
+## Como executar o projeto
+
+### Pré-requisitos
+
+- Node.js instalado
+- Git instalado
+
+### Instalação
+
+Clone o repositório
+
+```bash
+ git clone https://github.com/sabrina0604-max/pharma-system.git
+ ```
+ Acesse a pasta:
+
+ ```bash
+ cd pharma-system
+ ```
+
+ Instale as dependências:
+
+ ```bash
+ npm install
+ ```
+
+ Execute o projeto:
+
+ ```bash
+ npm run dev
+ ```
+ 
+ Depois, acesse o endereço exibido pelo Vite no terminal.
