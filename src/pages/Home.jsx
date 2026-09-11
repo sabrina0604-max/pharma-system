@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './Home.css'
-import Navbar from '../componentes/Navbar'
 import CardResumo from '../componentes/CardResumo'
 
 function Home(){
 
+  //Estados atualizados para armazenar produtos e vendas
   const [produtos, setProdutos] = useState([])
   const [vendas, setVendas] = useState([])
 
+  //Busca os produtos salvos no LocalStorage
   useEffect(() =>{
     const produtosSalvos = localStorage.getItem("produtos");
 
@@ -17,6 +18,7 @@ function Home(){
     }
   }, []);
 
+  //Busca as vendas salvas no LocalStorage
   useEffect(() =>{
     const vendasSalvas = localStorage.getItem("vendas");
 
@@ -27,6 +29,7 @@ function Home(){
   }, [])
 
 
+  //Calcula os principais dados exibidos no dashboard
   const totalProdutos = produtos.length;
   const totalVendas = vendas.length;
 
@@ -45,6 +48,7 @@ function Home(){
   const categoriasUnicas = [...new Set(categorias)];
   const totalCategorias = categoriasUnicas.length
   
+  // Formata valores númericos para padrão de moeda brasileira
   function formatarMoeda(valor){
     return valor.toLocaleString("pt-BR",{
       style: "currency",
@@ -52,12 +56,14 @@ function Home(){
     })
   }
 
+  //Ordena as vendas de mais recentes para a mais antiga
   const ultimasVendas = [...vendas].sort((a,b) =>{
     return new Date(b.data) - new Date(a.data)
   })
 
+  //Ordena os produtos com menor estoque primeiro
   const ordemEstoqueBaixo = [...produtosEstoqueBaixo].sort((a,b) =>{
-    return b.estoque - a.estoque
+    return a.estoque - b.estoque
   })
 
   return (

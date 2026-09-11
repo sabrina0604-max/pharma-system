@@ -4,11 +4,13 @@ import './Venda.css'
 
 const Venda = () => {
 
+  // Estados utilizados na tela de vendas
   const [produto, setProduto] = useState("")
   const [produtos, setProdutos] = useState([])
   const [quantidade, setQuantidade] = useState("")
   const [vendas, setVendas] = useState([])
 
+  // Busca os produtos cadastrados no LocalStorage ao carregar a página
   useEffect(()=>{
     const produtosSalvos = localStorage.getItem("produtos")
 
@@ -18,6 +20,7 @@ const Venda = () => {
     }
   }, [])
 
+  // Busca as vendas registradas no LocalStorage ao carregar a página
   useEffect(()=>{
     const vendasSalvas = localStorage.getItem("vendas")
 
@@ -27,10 +30,12 @@ const Venda = () => {
     }
   },[])
   
+  // Atualiza o produto selecionado pelo usuário
   function escolherProduto(evento){
     setProduto(Number(evento.target.value))
   }
 
+  // Atualiza a quantidade da venda e mantém o campo vazio quando necessário
   function atualizarQuantidade(evento){
     const valor = evento.target.value
 
@@ -41,10 +46,12 @@ const Venda = () => {
     }
   }
 
+  // Localiza na lista o produto selecionado pelo usuário
   const produtoSelecionado = produtos.find((item) =>
     item.id === produto
   )
 
+  //Calcula o valor total da venda somente quando há estoque suficiente
   let precoTotal = ""
 
   if(produtoSelecionado){
@@ -53,6 +60,7 @@ const Venda = () => {
     }
   }
 
+  //Valida os dados antes de permitir a finalização da venda
   function validações(){
     if(produto === ""){
       alert("Selecione um produto")
@@ -73,7 +81,7 @@ const Venda = () => {
     return true
   }
 
-
+  //Registra a venda, atualiza o estoque e salva os dados no Local Estorage
   function finalizarVenda(){
     if(!validações()){
       return
@@ -105,6 +113,7 @@ const Venda = () => {
       return item
     })
 
+    // Salva o estoque atualizado e limpa os campos da venda
     setProdutos(produtosAtualizados)
     localStorage.setItem('produtos', JSON.stringify(produtosAtualizados))
     setProduto("")
@@ -112,10 +121,12 @@ const Venda = () => {
     alert("Venda realizada com sucesso!")
   }
 
+  // Cria uma nova lista ordenada sem alterar o estado original das vendas
   const vendasOrdenadas = [...vendas].sort((a,b) =>{
     return new Date(b.data) - new Date(a.data)
   })
 
+  // Exclui uma venda e devolve a quantidade vendida ao estoque
   function excluirVenda(id){
 
     const confirmar= window.confirm("Deseja realmente excluir esta venda?")
@@ -124,8 +135,6 @@ const Venda = () => {
     }
 
     const venda = vendas.find(item => item.id === id)
-
-    const produto = produtos.find(item => item.id === vendas.produtoId)
 
     const vendasAtualizada = vendas.filter(item => item.id !== id);
     setVendas(vendasAtualizada)
@@ -144,6 +153,14 @@ const Venda = () => {
     localStorage.setItem("produtos", JSON.stringify(produtosAtualizados))
   }
 
+  // Formata valores númericos para padrão de moeda brasileira
+  function formatarMoeda(valor){
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    })
+  }
+
   return (
     <>
     <div className='container-venda'>
@@ -160,7 +177,7 @@ const Venda = () => {
       <p className='estoque'>Estoque disponivel: {produtoSelecionado? produtoSelecionado.estoque : "0"}</p>
       <input className='quantidade' type="number" name='quantidade' value={quantidade} onChange={atualizarQuantidade} placeholder='Digite a quantidade que deseja vender'/>
       <p className='preco'>Preço unitário: {produtoSelecionado? produtoSelecionado.preco : "0"}</p>
-      <p className='total'>Total: {precoTotal}</p>
+      <p className='total'>Total: {formatarMoeda(precoTotal)}</p>
       <Button texto="Finalizar Venda" variante={"azul"} onClick={finalizarVenda}/>
     </div>
     <div className='tabela-vendas'>
@@ -175,8 +192,8 @@ const Venda = () => {
         <div className='linha-venda' key={item.id}>
           <span>{item.produto}</span>
           <span>{item.quantidade}</span>
-          <span>R$ {item.precoUnitario.toFixed(2)}</span>
-          <span>R$ {item.precoTotal.toFixed(2)}</span>
+          <span>{formatarMoeda(item.precoUnitario)}</span>
+          <span>{formatarMoeda(item.precoTotal)}</span>
           <span>{new Date(item.data).toLocaleString("pt-BR")}</span>
           <div className='botoes'>
             <Button texto="Excluir venda" onClick={()=> excluirVenda(item.id)}/>

@@ -5,6 +5,7 @@ import './Cadastro.css';
 
 const Cadastro = () => {
 
+    //Busca os produtos salvos no LocalStorage ao carregar a página
     useEffect(() =>{
         const produtosSalvos = localStorage.getItem("produtos");
 
@@ -15,6 +16,7 @@ const Cadastro = () => {
 
     }, [])
 
+    //Estados utilizados para controlar os campos do formulário
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [estoque, setEstoque] = useState("");
@@ -22,10 +24,13 @@ const Cadastro = () => {
     const [descricao, setDescricao] = useState("");
     const [fabricante, setFabricante] = useState("");
 
+    //Lista de produtos cadastrados
     const [produtos, setProdutos]= useState ([]);
 
+    //Armazena o ID do produto que está sendo editado
     const [idEditando, setIdEditando] = useState(null);
 
+    //Atualiza os campos do formulário e aplica restrições de entrada
     function atualizarNome(evento){
         setNome(evento.target.value.toUpperCase());
     }
@@ -62,6 +67,7 @@ const Cadastro = () => {
         }
     }
 
+    //Verifica se todos os campos obrigatórios foram preenchidos
     function validarCampos(){
         if(nome === ""){
             alert("Digite o nome")
@@ -95,6 +101,7 @@ const Cadastro = () => {
         return true;
     }
 
+    //Limpa todos os campos do formulário
     function limparInputs(){
         setNome("")
         setPreco("")
@@ -104,15 +111,17 @@ const Cadastro = () => {
         setFabricante("")
     }
 
+    //Recupera o ID do URL e permite navegar entre as páginas
     const{id} = useParams();
     const navigate = useNavigate();
 
+    //Cadastra um novo produto ou atualiza um produto existente
     function salvarCadastro(){
 
         if(!validarCampos()){
             return;
         }
-
+ 
         if(idEditando === null){
             const novoProduto = {
                 id: Date.now(),
@@ -157,7 +166,7 @@ const Cadastro = () => {
     
     }                 
 
-
+    //Verifica se a página está no modo de edição e carrega os dados do produto
     useEffect(()=>{
         
         if(id){

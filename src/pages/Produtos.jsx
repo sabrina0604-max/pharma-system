@@ -1,5 +1,4 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
 import React, { useEffect, useState } from 'react'
 import Button from '../componentes/Button';
 import './Produtos.css'
@@ -7,22 +6,26 @@ import './Produtos.css'
 
 const Produtos = () => {
 
+  //Estados utilizados para controlar produtos, busca e ordenação
   const [produtos, setProdutos] = useState([]);
   const [busca, setBusca] = useState("");
   const [ordenacao, setOrdenacao] = useState("");
   
   const navigate = useNavigate();
 
+  //Recupera o filtro de estoque baixo através da URL
   const [searchParams] = useSearchParams();
   const estoqueBaixo = searchParams.get("estoqueBaixo");
 
   const produtosEstoqueBaixo = produtos.filter(item => item.estoque < 5);
   let produtoParaBuscar = produtos;
 
+  //Atualiza o campo de busca
   function buscaValue(evento){
     setBusca(evento.target.value)
   }
 
+  //Busca os produtos salvos no LocalStorage
   useEffect(() => {
     const produtosSalvos = localStorage.getItem("produtos");
 
@@ -33,6 +36,7 @@ const Produtos = () => {
 
   },[]);
 
+  //Exclui o produto e atualiza o LocalStorage
   function excluirProduto(id){
     const produtosAtualizados = produtos.filter(produto => produto.id !== id);
     setProdutos(produtosAtualizados)
@@ -43,6 +47,7 @@ const Produtos = () => {
     produtoParaBuscar = produtosEstoqueBaixo;
   }
 
+  //Filtra os produtos de acordo com o capo de busca
   const produtoBusca = produtoParaBuscar.filter(item => 
     item.nome.toUpperCase().includes(busca.toUpperCase())||
     item.categoria.toUpperCase().includes(busca.toUpperCase())||
@@ -56,6 +61,7 @@ const Produtos = () => {
     produtosExibidos = produtoBusca;
   }
 
+  //Define as regras de ordenação dos produtos
   const copiaProdutos =[...produtosExibidos]
   const regraOrdenacao = {
     "nome-AZ": (a,b) => a.nome.localeCompare(b.nome),
@@ -73,11 +79,12 @@ const Produtos = () => {
     produtosExibidos = copiaProdutos
   }
 
+  //Navega para a página de edição do produto
   function editarProduto(id){
     navigate(`/cadastro/${id}`);
   }
  
-
+  //Atualiza a opção de ordenação selecionada
   function escolherOrdem(evento){
     setOrdenacao(evento.target.value)
   }
