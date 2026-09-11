@@ -38,6 +38,12 @@ const Produtos = () => {
 
   //Exclui o produto e atualiza o LocalStorage
   function excluirProduto(id){
+
+    const confirmar= window.confirm("Deseja realmente excluir este produto ?")
+    if(!confirmar){
+      return
+    }
+
     const produtosAtualizados = produtos.filter(produto => produto.id !== id);
     setProdutos(produtosAtualizados)
     localStorage.setItem("produtos", JSON.stringify(produtosAtualizados));
@@ -47,7 +53,7 @@ const Produtos = () => {
     produtoParaBuscar = produtosEstoqueBaixo;
   }
 
-  //Filtra os produtos de acordo com o capo de busca
+  //Filtra os produtos de acordo com o campo de busca
   const produtoBusca = produtoParaBuscar.filter(item => 
     item.nome.toUpperCase().includes(busca.toUpperCase())||
     item.categoria.toUpperCase().includes(busca.toUpperCase())||

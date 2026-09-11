@@ -9,6 +9,7 @@ const Venda = () => {
   const [produtos, setProdutos] = useState([])
   const [quantidade, setQuantidade] = useState("")
   const [vendas, setVendas] = useState([])
+  const [erroQuantidade, setErroQuantidade] = useState("")
 
   // Busca os produtos cadastrados no LocalStorage ao carregar a página
   useEffect(()=>{
@@ -41,8 +42,17 @@ const Venda = () => {
 
     if(valor === ""){
       setQuantidade("")
+      setErroQuantidade("")
+      return
+    }
+
+    const novaQuantidade = Number(valor)
+    setQuantidade(novaQuantidade)
+
+    if(produtoSelecionado && novaQuantidade > produtoSelecionado.estoque){
+      setErroQuantidade("Quantidade maior que o estoque disponível")
     }else{
-      setQuantidade(Number(evento.target.value))
+      setErroQuantidade("")
     }
   }
 
@@ -81,7 +91,7 @@ const Venda = () => {
     return true
   }
 
-  //Registra a venda, atualiza o estoque e salva os dados no Local Estorage
+  //Registra a venda, atualiza o estoque e salva os dados no LocalStorage
   function finalizarVenda(){
     if(!validações()){
       return
@@ -150,6 +160,7 @@ const Venda = () => {
       return item
     })
 
+    setProdutos(produtosAtualizados)
     localStorage.setItem("produtos", JSON.stringify(produtosAtualizados))
   }
 
@@ -176,7 +187,10 @@ const Venda = () => {
 
       <p className='estoque'>Estoque disponivel: {produtoSelecionado? produtoSelecionado.estoque : "0"}</p>
       <input className='quantidade' type="number" name='quantidade' value={quantidade} onChange={atualizarQuantidade} placeholder='Digite a quantidade que deseja vender'/>
-      <p className='preco'>Preço unitário: {produtoSelecionado? produtoSelecionado.preco : "0"}</p>
+      {erroQuantidade &&(
+        <p className='erro-quantidade'>{erroQuantidade}</p>
+      )}
+      <p className='preco'>Preço unitário: {produtoSelecionado? formatarMoeda(Number(produtoSelecionado.preco)) : "R$0,00"}</p>
       <p className='total'>Total: {formatarMoeda(precoTotal)}</p>
       <Button texto="Finalizar Venda" variante={"azul"} onClick={finalizarVenda}/>
     </div>

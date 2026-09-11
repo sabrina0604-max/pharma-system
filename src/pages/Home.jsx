@@ -4,7 +4,7 @@ import CardResumo from '../componentes/CardResumo'
 
 function Home(){
 
-  //Estados atualizados para armazenar produtos e vendas
+  //Estados utilizados para armazenar produtos e vendas
   const [produtos, setProdutos] = useState([])
   const [vendas, setVendas] = useState([])
 
