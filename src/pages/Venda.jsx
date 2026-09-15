@@ -214,7 +214,7 @@ const Venda = () => {
       {vendasOrdenadas.map((item) =>(
         <div className='linha-venda' key={item.id}>
           <span>{item.produto}</span>
-          <span>{item.quantidade}</span>
+          <span>{item.quantidade} un.</span>
           <span>{formatarMoeda(item.precoUnitario)}</span>
           <span>{formatarMoeda(item.precoTotal)}</span>
           <span>{new Date(item.data).toLocaleString("pt-BR")}</span>
