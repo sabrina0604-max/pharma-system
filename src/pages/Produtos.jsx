@@ -95,6 +95,13 @@ const Produtos = () => {
     setOrdenacao(evento.target.value)
   }
 
+  function formatarMoeda(valor){
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    })
+  }
+
   return(
     <div className='container-produtos'>
       <h1>Produtos</h1>
@@ -131,7 +138,7 @@ const Produtos = () => {
             produtosExibidos.map((produto) =>(
               <tr key={produto.id}>
                 <td>{produto.nome}</td>
-                <td>R$ {produto.preco}</td>
+                <td>{formatarMoeda(Number(produto.preco))}</td>
                 <td>{produto.categoria}</td>
                 <td>{produto.fabricante}</td>
                 <td>{produto.estoque} un.</td>
