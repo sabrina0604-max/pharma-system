@@ -33,10 +33,3 @@
     text-decoration: none;
     color: inherit;
 }
-
-@media(max-width: 600px){
-    .card-resumo{
-        width: 100%;
-        max-width: 300px;
-    }
-}

@@ -14,6 +14,7 @@
 
 .home h1{
     text-align: center;
+    margin-top: 40px;
 }
 
 .ultimas-vendas,
@@ -24,6 +25,10 @@
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ultimas-vendas{
+    overflow-x: auto;
 }
 
 .linha-ultima-venda,
@@ -39,6 +44,7 @@
 .linha-ultima-venda,
 .cabecalho-ultima-venda{
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    min-width: 800px;
 }
 
 .cabecalho-produtos-estoque-baixo,

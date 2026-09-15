@@ -128,6 +128,7 @@ const Venda = () => {
     localStorage.setItem('produtos', JSON.stringify(produtosAtualizados))
     setProduto("")
     setQuantidade("")
+    setErroQuantidade("")
     alert("Venda realizada com sucesso!")
   }
 
@@ -186,7 +187,14 @@ const Venda = () => {
       
 
       <p className='estoque'>Estoque disponivel: {produtoSelecionado? produtoSelecionado.estoque : "0"}</p>
-      <input className='quantidade' type="number" name='quantidade' value={quantidade} onChange={atualizarQuantidade} placeholder='Digite a quantidade que deseja vender'/>
+      <input 
+        className={`quantidade ${erroQuantidade ? "input-erro" : ""}`} 
+        type="number" 
+        name='quantidade' 
+        value={quantidade} 
+        onChange={atualizarQuantidade} 
+        placeholder='Digite a quantidade que deseja vender'
+      />
       {erroQuantidade &&(
         <p className='erro-quantidade'>{erroQuantidade}</p>
       )}
@@ -201,6 +209,7 @@ const Venda = () => {
           <span>Preço unitário: </span>
           <span>Preço Total: </span>
           <span>Data: </span>
+          <span>Ações: </span>
       </div>
       {vendasOrdenadas.map((item) =>(
         <div className='linha-venda' key={item.id}>

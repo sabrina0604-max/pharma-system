@@ -28,3 +28,16 @@
 .links a:hover{
     color: #ccc;
 }
+
+@media(max-width: 500px){
+    .navbar{
+        padding: 0 20px;
+    }
+    .navbar h2{
+        font-size: 18px;
+    }
+
+    .links{
+        gap: 15px;
+    }
+}

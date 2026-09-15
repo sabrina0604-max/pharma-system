@@ -57,6 +57,7 @@
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 1fr;
     align-items: center;
+    min-width: 800px;
 }
 
 .cabecalho-vendas{
@@ -74,4 +75,23 @@
     color:#d32f2f;
     font-size: 14px;
     margin-top: -10px;
+}
+
+.quantidade.input-erro{
+    box-shadow: 0 0 5px rgba(211 ,47 ,47, 0.2);
+    border-color: #d32f2f;
+}
+
+
+.cabecalho-vendas span:nth-child(2),
+.cabecalho-vendas span:nth-child(3),
+.cabecalho-vendas span:nth-child(4),
+.cabecalho-vendas span:nth-child(5),
+.cabecalho-vendas span:nth-child(6),
+.linha-venda span:nth-child(2),
+.linha-venda span:nth-child(3),
+.linha-venda span:nth-child(4),
+.linha-venda span:nth-child(5),
+.linha-venda span:nth-child(6){
+    text-align: center;
 }
