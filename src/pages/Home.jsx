@@ -119,7 +119,7 @@ function Home(){
               {ordemEstoqueBaixo.slice(0, 5).map((item) =>(
                 <div className='linha-produtos-estoque-baixo' key={item.id}>
                   <span>{item.nome}</span>
-                  <span>{item.estoque}</span>
+                  <span>{item.estoque} un.</span>
                 </div>
               ))}
             </>

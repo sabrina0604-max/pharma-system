@@ -134,7 +134,7 @@ const Produtos = () => {
                 <td>R$ {produto.preco}</td>
                 <td>{produto.categoria}</td>
                 <td>{produto.fabricante}</td>
-                <td>{produto.estoque}</td>
+                <td>{produto.estoque} un.</td>
                 <td>{produto.descricao}</td>
                 <td>
                   <div className='acoes'>
